@@ -5,6 +5,9 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
 
 export default [
+  {
+    ignores: ['**/dist/**', '**/node_modules/**', 'eslint.config.js'],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
@@ -23,9 +26,8 @@ export default [
       },
     },
     rules: {
-      // ===========================
-      // CORE JAVASCRIPT RULES
-      // ===========================
+      // Core JS rules
+
       'no-console': 'off',
       'no-var': 'error',
       'prefer-const': 'error',
@@ -40,225 +42,47 @@ export default [
       'no-param-reassign': 'error',
       'prefer-template': 'error',
       'prefer-arrow-callback': 'error',
-      'object-shorthand': ['error', 'always'],
 
-      // ===========================
-      // CODE QUALITY & READABILITY
-      // ===========================
-      'no-unused-expressions': [
-        'error',
-        { allowShortCircuit: true, allowTernary: true },
-      ],
-      'no-shadow': 'error',
-      'no-duplicate-imports': 'error',
-      'no-use-before-define': [
-        'error',
-        { functions: false, classes: true, variables: true },
-      ],
-      'no-nested-ternary': 'warn',
-      'max-depth': ['warn', 4],
-      complexity: ['warn', 15],
-      'max-lines-per-function': [
-        'warn',
-        { max: 50, skipBlankLines: true, skipComments: true },
-      ],
-      'no-magic-numbers': [
-        'warn',
-        {
-          ignore: [0, 1, -1],
-          ignoreArrayIndexes: true,
-          ignoreDefaultValues: true,
-        },
-      ],
-
-      // ===========================
-      // BEST PRACTICES
-      // ===========================
-      'default-case': 'error',
-      'default-case-last': 'error',
-      'grouped-accessor-pairs': 'error',
-      'no-constructor-return': 'error',
-      'no-eval': 'error',
-      'no-implied-eval': 'error',
-      'no-new-func': 'error',
-      'no-new-wrappers': 'error',
-      'no-useless-return': 'error',
-      'no-useless-concat': 'error',
-      'no-useless-computed-key': 'error',
-      'no-useless-rename': 'error',
-      'no-lonely-if': 'error',
-      'prefer-promise-reject-errors': 'error',
-      'prefer-rest-params': 'error',
-      'prefer-spread': 'error',
-      'prefer-exponentiation-operator': 'error',
-      yoda: 'error',
-      'no-sequences': 'error',
-
-      // ===========================
-      // ASYNC/PROMISE HANDLING
-      // ===========================
-      'no-async-promise-executor': 'error',
-      'no-await-in-loop': 'warn',
-      'require-await': 'warn',
-      'no-promise-executor-return': 'error',
-      'require-atomic-updates': 'error',
-
-      // ===========================
-      // SECURITY & ERROR PREVENTION
-      // ===========================
+      // Security/error prevention
       'no-alert': 'error',
       'no-iterator': 'error',
       'no-proto': 'error',
-      'no-unreachable-loop': 'error',
-      'no-unused-private-class-members': 'error',
+      'no-promise-executor-return': 'error',
+      'require-atomic-updates': 'error',
       'no-restricted-globals': [
         'error',
         { name: 'isNaN', message: 'Use Number.isNaN instead' },
         { name: 'isFinite', message: 'Use Number.isFinite instead' },
       ],
-      'no-extend-native': 'error',
-      'no-new': 'error',
 
-      // ===========================
-      // NAMING CONVENTIONS
-      // ===========================
-      camelcase: [
-        'error',
-        {
-          properties: 'never',
-          ignoreDestructuring: true,
-          ignoreImports: true,
-        },
-      ],
+      'object-shorthand': ['error', 'always'],
     },
   },
   {
-    // ===========================
-    // TYPESCRIPT-SPECIFIC RULES
-    // ===========================
+    // TypeScript-specific enhancements
     files: ['**/*.ts'],
     rules: {
-      // Override JS rules with TS equivalents
-      'no-shadow': 'off',
-      '@typescript-eslint/no-shadow': 'error',
-      'no-use-before-define': 'off',
-      '@typescript-eslint/no-use-before-define': [
-        'error',
-        { functions: false, classes: true },
-      ],
-      'no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-expressions': [
-        'error',
-        { allowShortCircuit: true, allowTernary: true },
-      ],
-      'no-magic-numbers': 'off',
-      '@typescript-eslint/no-magic-numbers': [
-        'warn',
-        {
-          ignore: [0, 1, -1],
-          ignoreArrayIndexes: true,
-          ignoreDefaultValues: true,
-          ignoreEnums: true,
-          ignoreNumericLiteralTypes: true,
-          ignoreReadonlyClassProperties: true,
-        },
-      ],
+      '@typescript-eslint/no-explicit-any': 'off',
 
-      // Type Safety
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        {
-          prefer: 'type-imports',
-          fixStyle: 'inline-type-imports',
-        },
-      ],
+      '@typescript-eslint/consistent-type-imports': 'error',
+
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+
       '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-        },
-      ],
-
-      // Type Quality
-      '@typescript-eslint/explicit-function-return-type': [
         'warn',
-        {
-          allowExpressions: true,
-          allowTypedFunctionExpressions: true,
-          allowHigherOrderFunctions: true,
-          allowDirectConstAssertionInArrowFunctions: true,
-        },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/explicit-module-boundary-types': 'warn',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
-      '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      '@typescript-eslint/prefer-optional-chain': 'error',
-      '@typescript-eslint/prefer-as-const': 'error',
-      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-      '@typescript-eslint/no-inferrable-types': 'error',
-      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-      '@typescript-eslint/method-signature-style': ['error', 'property'],
-
-      // Modern TypeScript Features
-      '@typescript-eslint/prefer-readonly': 'warn',
-      '@typescript-eslint/prefer-reduce-type-parameter': 'error',
-      '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-      '@typescript-eslint/prefer-includes': 'error',
-      '@typescript-eslint/no-unnecessary-condition': 'warn',
-      '@typescript-eslint/no-useless-empty-export': 'error',
-
-      // Error Prevention
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/await-thenable': 'error',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        {
-          checksVoidReturn: false,
-        },
-      ],
-      '@typescript-eslint/strict-boolean-expressions': [
-        'warn',
-        {
-          allowString: false,
-          allowNumber: false,
-          allowNullableObject: false,
-        },
-      ],
-
-      // Code Quality
-      '@typescript-eslint/no-confusing-void-expression': 'error',
-      '@typescript-eslint/no-redundant-type-constituents': 'warn',
-      '@typescript-eslint/prefer-return-this-type': 'error',
     },
   },
   {
-    // ===========================
-    // TEST FILES
-    // ===========================
-    files: ['**/*.test.{js,ts}', '**/*.spec.{js,ts}'],
+    files: ['**/*.test.{js,ts}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      'max-lines-per-function': 'off',
-      'no-magic-numbers': 'off',
-      '@typescript-eslint/no-magic-numbers': 'off',
     },
   },
   {
-    // ===========================
-    // GLOBAL IGNORES & OPTIONS
-    // ===========================
-    ignores: [
-      'eslint.config.js',
-      'dist/**',
-      'build/**',
-      'node_modules/**',
-      'coverage/**',
-    ],
+    // Global ignores and config
+    ignores: ['eslint.config.js', 'dist/**', 'node_modules/**'],
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },

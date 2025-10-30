@@ -1,5 +1,5 @@
 // src/utils/responseHandler.ts
-import { Response } from 'express';
+import type { Response } from 'express';
 import { logger } from './logger.util';
 
 type SuccessPayload<T> = {

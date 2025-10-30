@@ -1,9 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { logger } from '../utils/logger.util';
 import { ResponseHandler } from '@/utils/response-handler.util';
+import type { HttpError } from 'http-errors';
 
 export function errorHandler(
-  err: any,
+  err: HttpError,
   _req: Request,
   res: Response,
   _next: NextFunction
