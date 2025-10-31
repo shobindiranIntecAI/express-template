@@ -1,1 +1,1 @@
-export * from './get-user-by-id.controller';
+export * from './register-user';

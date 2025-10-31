@@ -1,8 +1,9 @@
-import { getUserById } from '@/controllers/user';
+import { registerUserMongo, registerUserPostgres } from '@/controllers/user';
 import { Router } from 'express';
 
 const router = Router();
 
-router.route('/:userId').get(getUserById);
+router.route('/mongo').post(registerUserMongo);
+router.route('/postgres').post(registerUserPostgres)
 
 export default router;

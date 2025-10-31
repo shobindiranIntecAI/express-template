@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node -r tsconfig-paths/register src/index.ts | pino-pretty",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/index.js",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
@@ -15,10 +15,6 @@
     "check:all": "npm run format:check && echo '✅ Format check passed' && npm run lint && echo '✅ Lint passed' && npm run type:check && echo '✅ Type check passed' && echo '🎉 All checks passed!'",
     "prepare": "husky"
   },
-  "_moduleAliases": {
-    "@": "dist",
-    "@types": "dist/types"
-  },
   "author": "",
   "license": "ISC",
   "description": "",
@@ -28,8 +24,12 @@
     "helmet": "^8.1.0",
     "http-errors": "^2.0.0",
     "module-alias": "^2.2.3",
+    "mongoose": "^8.19.2",
+    "pg": "^8.16.3",
     "pino": "^10.1.0",
     "pino-pretty": "^13.1.2",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.27",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -46,6 +46,7 @@
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2"
