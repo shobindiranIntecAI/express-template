@@ -16,6 +16,9 @@ const envSchema = z.object({
   POSTGRES_DB: z.string(),
   MONGO_URI: z.string(),
   REDIS_CONNECTION_STRING: z.string(),
+  REDIS_MAX_RETRIES: z.string(),
+  REDIS_RETRY_DELAY: z.string(),
+  REDIS_CONNECTION_TIMEOUT: z.string(),
 });
 
 export const env = envSchema.parse(process.env);
