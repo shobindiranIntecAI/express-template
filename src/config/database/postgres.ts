@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { logger } from '@/utils/logger.util';
-import fs from "fs";
+import fs from 'fs';
 import { env } from '../env';
 // Import entities
 import { User } from '@/entities/index';
 
-const isRDS = env.POSTGRES_HOST.includes("amazonaws.com");
+const isRDS = env.POSTGRES_HOST.includes('amazonaws.com');
 export const postgresDataSource = new DataSource({
   type: 'postgres',
   host: env.POSTGRES_HOST,
@@ -17,9 +17,9 @@ export const postgresDataSource = new DataSource({
   synchronize: true, // disable in production
   logging: false,
   entities: [User],
-  ssl:isRDS
+  ssl: isRDS
     ? {
-        ca: fs.readFileSync("./global-bundle.pem").toString(),
+        ca: fs.readFileSync('./global-bundle.pem').toString(),
       }
     : false,
 });
