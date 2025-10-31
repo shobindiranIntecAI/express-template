@@ -1,4 +1,4 @@
-import { ConsumeMessage } from 'amqplib';
+import type { ConsumeMessage } from 'amqplib';
 import { rabbitmq } from './index';
 import { env } from '@/config/env';
 
