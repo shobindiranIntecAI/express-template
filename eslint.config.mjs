@@ -6,7 +6,12 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['**/dist/**', '**/node_modules/**', 'eslint.config.js'],
+    ignores: [
+      '**/dist/**',
+      '**/build/**',
+      '**/node_modules/**',
+      'eslint.config.js',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

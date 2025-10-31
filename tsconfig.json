@@ -7,7 +7,7 @@
     "useDefineForClassFields": false,
     "moduleResolution": "Node",
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./build",
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"]
