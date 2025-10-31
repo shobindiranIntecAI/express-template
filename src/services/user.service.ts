@@ -1,14 +1,23 @@
-import type { UserI } from '@/types';
 import createHttpError from 'http-errors';
+import { UserMongoRepo } from '../repositories/mongo/user.repo';
+import { userPostgresRepo } from '@/repositories/postgres/user.repo';
 
 export class UserService {
-  static async getUserById(id: string): Promise<UserI> {
-    if (!id) {
-      throw createHttpError(400, 'Id not given');
+  static async registerUser(name: string, email: string) {
+    const existing = await UserMongoRepo.findByEmail(email);
+    if (existing) {
+      throw createHttpError(409, 'User already exists');
     }
-    return {
-      id,
-      name: 'Hello World',
-    };
+
+    return UserMongoRepo.createUser({ name, email });
+  }
+
+  static async createUser(name: string, email: string) {
+    const existing = await userPostgresRepo.findUserByEmail(email);
+    if (existing) {
+      throw createHttpError(409, 'User already exists');
+    }
+
+    return userPostgresRepo.registerUser({ name, email });
   }
 }
