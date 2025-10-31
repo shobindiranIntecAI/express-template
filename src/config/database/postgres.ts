@@ -1,20 +1,27 @@
-// src/database/postgres/dataSource.ts
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { logger } from '@/utils/logger.util';
+import fs from "fs";
+import { env } from '../env';
 // Import entities
 import { User } from '@/entities/index';
 
+const isRDS = env.POSTGRES_HOST.includes("amazonaws.com");
 export const postgresDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.POSTGRES_HOST,
-  port: Number(process.env.POSTGRES_PORT),
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
+  host: env.POSTGRES_HOST,
+  port: Number(env.POSTGRES_PORT),
+  username: env.POSTGRES_USER,
+  password: env.POSTGRES_PASSWORD,
+  database: env.POSTGRES_DB,
   synchronize: true, // disable in production
   logging: false,
   entities: [User],
+  ssl:isRDS
+    ? {
+        ca: fs.readFileSync("./global-bundle.pem").toString(),
+      }
+    : false,
 });
 
 export async function connectPostgres() {

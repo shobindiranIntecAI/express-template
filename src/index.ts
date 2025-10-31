@@ -12,6 +12,7 @@ import { connectDatabases, disconnectDatabases } from './config/database';
 const server = app.listen(env.PORT, () => {
   logger.info(`Server running on port ${env.PORT}`);
 });
+
 (async () => {
   try {
     await rabbitmq.connect();
@@ -20,7 +21,6 @@ const server = app.listen(env.PORT, () => {
     logger.error('RabbitMQ connection failed', err.message);
   }
 })();
-process.on('SIGTERM', () => {
 
 process.on('SIGINT', async () => {
   logger.info('SIGINT received: closing application...');
