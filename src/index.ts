@@ -4,8 +4,7 @@ import { env } from './config/env';
 import { logger } from './utils/logger.util';
 import { connectDatabases, disconnectDatabases } from './config/database';
 
-
-(async()=>{
+(async () => {
   await connectDatabases();
 })();
 
