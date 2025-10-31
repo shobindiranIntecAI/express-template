@@ -15,6 +15,7 @@ const envSchema = z.object({
   POSTGRES_PASSWORD: z.string(),
   POSTGRES_DB: z.string(),
   MONGO_URI: z.string(),
+  REDIS_CONNECTION_STRING: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

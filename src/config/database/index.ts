@@ -1,10 +1,16 @@
 import { connectMongo, disconnectMongo } from './mongo';
 import { connectPostgres, disconnectPostgres } from './postgres';
 import { logger } from '@/utils/logger.util';
+import RedisClient from './redis';
 
 export async function connectDatabases() {
   try {
-    await Promise.all([connectMongo(), connectPostgres()]);
+    const connectRedis = new RedisClient();
+    await Promise.all([
+      connectPostgres(),
+      connectMongo(),
+      connectRedis.connect(),
+    ]);
     logger.info('🚀 All databases connected successfully');
   } catch (err) {
     logger.error({ err }, '❌ Database initialization error');
@@ -14,7 +20,12 @@ export async function connectDatabases() {
 
 export async function disconnectDatabases() {
   try {
-    await Promise.all([disconnectMongo(), disconnectPostgres()]);
+    const connectRedis = new RedisClient();
+    await Promise.all([
+      disconnectMongo(),
+      disconnectPostgres(),
+      connectRedis.disconnect(),
+    ]);
     logger.info('⛓️‍💥 All databases disconnected successfully');
   } catch (err) {
     logger.error({ err }, '❌ Database disconnection failed');

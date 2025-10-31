@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { ResponseHandler } from '@/utils/response-handler.util';
 import { UserService } from '@/services';
+import { StartRedis } from '@/helper/redis/redis-service';
 
 export async function registerUserPostgres(
   req: Request,
@@ -8,8 +9,10 @@ export async function registerUserPostgres(
   next: NextFunction
 ) {
   try {
+    const redis = await StartRedis();
     const { name, email } = req.body;
     const user = await UserService.createUser(name, email);
+    await redis.set('key', user, 3600);
     return ResponseHandler.success(res, 'User registered successfully', user);
   } catch (err) {
     next(err);
