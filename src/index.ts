@@ -16,6 +16,7 @@ const server = app.listen(env.PORT, () => {
 (async () => {
   try {
     await rabbitmq.connect();
+
     logger.info('RabbitMQ connected successfully');
   } catch (err: any) {
     logger.error('RabbitMQ connection failed', err.message);
